@@ -1,0 +1,69 @@
+#######
+Setup##
+#######
+
+##Create SFTP user group
+sudo groupadd SFTP
+
+##Edit /etc/ssh/sshd_config
+#Change:
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+#To (Disable SFTP Access from sshd_config):
+
+#Subsystem sftp /usr/lib/openssh/sftp-server
+
+#Add:
+#Enable the internal SFTP Server
+Subsystem sftp internal-sftp
+
+#Match the settings with the SFTP user group (block indent required)
+Match Group SFTP
+
+#Set the home directory
+   ChrootDirectory %h
+   ForceCommand internal-sftp
+   X11Forwarding no
+   AllowTCPForwarding no
+   PasswordAuthentication yes
+
+##Restart ssh
+
+systemctl restart ssh
+
+###Note: watch out for 'UsePAM yes' to not be under the 'Match Group' block 
+
+##############
+Create Users##
+##############
+##Create User
+sudo adduser alex
+
+##Deny shell access and add 'alex' to the SFTP user group
+sudo usermod -s /bin/nologin alex
+sudo usermod -g SFTP alex
+
+##Chroot user (so they only see their directory after login)
+sudo chown root:alex /home/alex
+sudo chmod 755 /home/alex
+
+sudo mkdir /home/alex/Upload
+sudo chown alex:alex /home/alex/Upload
+sudo chmod 755 /home/alex/Upload
+
+########################################
+Note: The upload speed when RPI/Tinkerboard
+is used as the server will be limited due to the
+SD card write speed. The upload might even stall
+when the file is too large and the upload speed 
+exceeds the physical write speed of the SD card.
+Even class 10 SD card has only the write speed of
+10 MB/Sec. When using an FAT formatted drive on RPI/
+Tinkerboard, the rwx permission is determined by the
+way that it is mounted; therefore make sure to execute
+the following command when mounting to make the drive 
+available to every user when uploading through SFTP:
+
+sudo mount /dev/sda1 USB/ -o umask=000
+ 

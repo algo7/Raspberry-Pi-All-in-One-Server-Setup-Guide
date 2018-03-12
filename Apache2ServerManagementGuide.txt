@@ -1,0 +1,327 @@
+#############################
+Disallow Directory Browsing #
+#############################
+
+###Edit apache2.conf###
+
+<Directory />
+	Options FollowSymLinks
+	AllowOverride None
+	Require all denied
+</Directory>
+
+<Directory /usr/share>
+	AllowOverride None
+	Require all granted
+</Directory>
+
+#Change This Class:
+
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+</Directory>
+
+#To:
+
+<Directory /var/www/>
+	Options FollowSymLinks
+	AllowOverride None
+	Require all granted
+</Directory>
+
+###Restart the Server
+
+###################
+Enable SSL Module##
+###################
+
+##Enable ssl module
+
+a2enmod ssl
+
+#######################################
+Enable / Disable Specific Site Config##
+#######################################
+
+###Enable a site config file###
+
+a2ensite xxx.conf 
+
+##Restart the Server###
+
+#Example:
+
+a2ensite 000-default.conf
+
+###Dsiable a site config file###
+
+a2dissite xxx.conf
+
+###Restart the Server###
+
+#Example:
+
+a2dissite xxx.conf
+
+##Note that enabled sites will appear in sites-enabled folder under the /etc/apache2 directory##
+
+#######################################
+Add Cloudflare-signed SSL Certificate##
+#######################################
+
+###Create SSL Certificate on Cloudflare###
+
+#Download the Certificate (public key) and the Private Key
+
+###Create a folder for the SSL Cert. /Private Key in /etc/apache2 (eg. /etc/apache2/ssl)###
+
+###Move the SSL Cert. and the Private Key into the folder###
+
+###Edit the config giles in the sites-avaliable folder###
+
+#Under the VirtualHost Class add:
+
+SSLEngine on
+
+SSLCertificateFile /path/to/your_domain_name.crt
+
+SSLCertificateKeyFile /path/to/your_private.key
+
+###Restart the Server
+
+#Example
+
+<VirtualHost *:443>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/hashcatserver
+
+        SSLEngine on
+        SSLCertificateFile      /etc/apache2/ssl/Cert
+        SSLCertificateKeyFile   /etc/apache2/ssl/Privk
+
+</VirtualHost>
+
+################################################
+Enable Authenticated Origin Pull on Cloudflare##
+################################################
+
+###Create a folder for the CA certificate in /etc/apache2 (eg. /etc/apache2/origin-pull)###
+
+###Edit the config files in the sites-avaliable folder###
+
+#Under the VirtualHost Class add:
+
+SSLVerifyClient require
+        
+SSLVerifyDepth 1
+        
+SSLCACertificateFile /etc/apache2/origin-pull/origin-pull-ca.pem
+
+###Restart the Server
+
+#Example:
+
+<VirtualHost *:443>
+	
+	ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/hashcatserver
+
+	SSLEngine on
+        SSLCertificateFile      /etc/apache2/ssl/Cert
+        SSLCertificateKeyFile   /etc/apache2/ssl/Privk
+
+	SSLVerifyClient require
+        SSLVerifyDepth 1
+        SSLCACertificateFile /etc/apache2/origin-pull/origin-pull-ca.pem
+	
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+########################################################
+Configure Sub-domain Names Using ServerAlias Directive##
+########################################################
+
+###Edit the config file in the sites-avaliable folder###
+
+#Under the VirtualHost Class and after the add:
+
+ServerName xxx.xxx
+
+ServerAlias yy.xxx.xxx zz.xxx.xxx kk.xxx.xxx 
+
+###Test config file syntax using apachectl -t
+
+###Restart the Server
+
+#Example:
+
+<VirtualHost *:443>
+
+        ServerName set-algorithm.tk
+        ServerAlias www.set-algorithm.tk hh.set-algorithm.tk
+        ServerAdmin webmas@localhost
+        DocumentRoot /var/www/ess
+
+        SSLEngine on
+        SSLCertificateFile      /etc/apache2/ssl/Cert1
+        SSLCertificateKeyFile   /etc/apache2/ssl/Privk1
+
+        SSLVerifyClient require
+        SSLVerifyDepth 1
+        SSLCACertificateFile /etc/apache2/origin-pull/origin-pu$
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+##############################################
+Install Evasive Module (Prevent DDOS Attack)##
+##############################################
+
+##Install the Module
+sudo apt-get -y install libapache2-mod-evasive
+
+##Stop postfix
+postfix stop
+
+##Create the Directory for DDOS Logs
+sudo mkdir -p /var/log/apache2/evasive
+
+##Configure Read-Write Ownership of the Log Directory
+sudo chown -R www-data:root /var/log/apache2/evasive 
+
+##Configure the Evasivd Module
+sudo nano /etc/apache2/mods-available/evasive.conf
+
+#Paste the Following Configuration 
+DOSHashTableSize 2048
+DOSPageCount 20  # maximum number of requests for the same page
+DOSSiteCount 300  # total number of requests for any object by the same client IP on the same listener
+DOSPageInterval 1.0 # interval for the page count threshold
+DOSSiteInterval 1.0  # interval for the site count threshold
+DOSBlockingPeriod 10.0 # time that a client IP will be blocked for
+DOSLogDir /var/log/apache2/evasive
+
+##Restart Apache2
+sudo systemctl restart apache2
+
+
+###############################################
+Install QoS Module (Prevent slowloris Attack)##
+###############################################
+
+##Install the Module
+sudo apt-get -y install libapache2-mod-qos
+
+##Configure the QoS Module
+sudo nano /etc/apache2/mods-enabled/qos.conf
+
+#Change the Configuration to the Following:
+<IfModule qos_module>
+  # minimum request rate (bytes/sec at request reading):
+  QS_SrvRequestRate                                 120
+
+  # limits the connections for this virtual host:
+  QS_SrvMaxConn                                     100
+
+  # allows keep-alive support till the server reaches 600 connections:
+  QS_SrvMaxConnClose                                600
+
+  # allows max 50 connections from a single ip address:
+  QS_SrvMaxConnPerIP                                 50
+</IfModule>
+
+##Restart Apache2
+sudo systemctl restart apache2
+
+#######################################################################
+Install Spamhaus Module (Prevent DNS Injection / Domain Blacklisting)##
+#######################################################################
+
+##Install the Module
+sudo apt-get -y install libapache2-mod-spamhaus
+
+##Create the Whilelist File
+touch /etc/spamhaus.wl
+
+##Configure the Spamhaus Module
+
+#Change the Configuration to the Following:
+<IfModule mod_spamhaus.c>
+
+#MS_Methods
+#    Syntax:  MS_Methods POST,PUT,OPTIONS
+#    Default: POST,PUT,OPTIONS
+#
+#    The values admitted are the httpd's methods (GET,POST,etc)
+#    Module verify remote ip address if the method used by the user is present
+#    in the value passed to this variable. Methods must be comma-separated
+MS_METHODS POST,PUT,OPTIONS,CONNECT
+
+
+#MS_WhiteList
+#    Syntax:  MS_WhiteList /etc/spamhaus.wl
+#    Default: no value
+#    Path of whitelist file.
+#    After you've edit it, you mustn't reload apache. This file will be read only
+#    when 'data modification time' change. You can add an individual IP address or
+#    subnets with CIDR.
+MS_WhiteList /etc/spamhaus.wl
+
+
+#MS_DNS
+#    Syntax:  MS_DNS sbl-xbl.spamhaus.org
+#    Default: sbl-xbl.spamhaus.org
+#    Name server to use for verify is an ip is blacklisted.
+#    Using a local rbldnsd instance of sbl-xbl, you can increase query performance
+#MS_Dns local.rbldnsd.instance.of.sbl-xbl
+
+
+#MS_CacheSize
+#    Syntax:    MS_CacheSize 256
+#    Default:   512
+#    Max value: 8192
+#    This directive can manage the number of cache entries.
+MS_CacheSize 512
+
+
+#MS_CustomError
+#    Syntax:   MS_CustomError "My custom error message"
+#    Default:  "Access Denied! Your address is blacklisted. More information about this error may be available in the server error log."
+#    A custom error message that allows you to replace default error message with one you create
+#MS_CustomError "Access Denied! Your address is blacklisted. More information about this error may be available in the server error log."
+
+
+</IfModule>
+
+#Or:
+
+<IfModule mod_spamhaus.c>
+  MS_METHODS POST,PUT,OPTIONS,CONNECT 
+  MS_WhiteList /etc/spamhaus.wl 
+  MS_CacheSize 256 
+</IfModule>
+
+##Alternative:
+#Append:
+
+<IfModule mod_spamhaus.c>
+  MS_METHODS POST,PUT,OPTIONS,CONNECT 
+  MS_WhiteList /etc/spamhaus.wl 
+  MS_CacheSize 256 
+</IfModule>
+
+#to the /etc/apache2/apache2.conf
+sudo nano /etc/apache2/apache2.conf
+
+##Restart Apache2
+sudo systemctl restart apache2 
+
+###Note:
+Link to Above Info.: https://www.techrepublic.com/blog/smb-technologist/secure-your-apache-server-from-ddos-slowloris-and-dns-injection-attacks/

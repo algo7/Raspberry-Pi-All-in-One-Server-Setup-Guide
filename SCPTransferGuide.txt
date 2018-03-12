@@ -1,0 +1,1 @@
+scp -P23 ximple.tkCert ximple.tkPrivk user@ssh.gpucluster.tk:/home/user

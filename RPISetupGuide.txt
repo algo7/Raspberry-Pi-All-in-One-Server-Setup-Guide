@@ -1,0 +1,153 @@
+########################
+DD The Kali Image File##
+########################
+
+##Check SD Card Partition
+fdisk -l 
+
+##Flash / DD the image into the SD Card
+
+dd if=/path/to/file/kali.img of=/dev/urpartition bs=512k
+
+###########################################
+Add the Config File to the Boot Partition##
+###########################################
+
+###For HDMI Reslolution (800x480)
+##Config File Content (Copy the Below Content Only):)
+
+# uncomment if you get no picture on HDMI for a default "safe" mode
+#hdmi_safe=1
+
+# uncomment this if your display has a black border of unused pixels visible
+# and your display can output without overscan
+#disable_overscan=1
+
+# uncomment the following to adjust overscan. Use positive numbers if console
+# goes off screen, and negative if there is too much border
+overscan_left=0
+overscan_right=7
+overscan_top=0
+overscan_bottom=0
+
+# uncomment to force a console size. By default it will be display's size minus
+# overscan.
+#framebuffer_width=1280
+#framebuffer_height=720
+
+# uncomment if hdmi display is not detected and composite is being output
+#hdmi_force_hotplug=1
+
+# uncomment to force a specific HDMI mode (here we are forcing 800x480!)
+hdmi_group=2
+hdmi_mode=1
+hdmi_mode=87
+hdmi_cvt=800 480 60 6 0 0 0
+
+max_usb_current=1
+    
+# uncomment to force a HDMI mode rather than DVI. This can make audio work in
+# DMT (computer monitor) modes
+#hdmi_drive=2
+
+# uncomment to increase signal to HDMI, if you have interference, blanking, or
+# no display
+#config_hdmi_boost=4
+
+# uncomment for composite PAL
+#sdtv_mode=2
+
+#uncomment to overclock the arm. 700 MHz is the default.
+arm_freq=800
+
+# for more options see http://elinux.org/RPi_config.txt)
+
+##End of Config File (Copy the Above Content Only)
+
+#####################
+First Boot Settings##
+#####################
+
+##Change Default SSH Key / Create New SSH Host Key
+
+#Change:
+cd /etc/ssh
+
+rm ssh_host_*
+
+dpkg-reconfigure openssh-server
+
+systemctl restart ssh
+
+#Create:
+
+dpkg-reconfigure openssh-server
+
+systemctl restart ssh
+
+##Enable Root Remote Login via SSH
+
+cd /etc/ssh
+
+nano /sshd_config
+
+#Change:
+PermitRootLogin without-password
+
+#To:
+PermitRootLogin yes
+
+systemctl restart ssh
+
+##Change Root Password:
+
+passwd root
+
+##Resize User Partition:
+
+#Install gparted:
+
+apt-get install gparted
+
+#Resize Partitions:
+
+GUI--
+
+## Update and Upgrade the System
+
+apt-get update && apt-get upgrade && apt-get dist-upgrade -y
+
+##Install Kali-Linux-Full
+
+apt-get install kali-linux-full
+
+## Update and Upgrade the System After Installed Kali-Linux-Full
+
+apt-get update && apt-get upgrade && apt-get dist-upgrade -y
+
+##Reboot
+
+##########################
+Install Useful Softwares##
+##########################
+apt-get install lm-sensors
+pip install speedtest-cli
+pip install slowloris
+apt-get install htop
+apt-get install mc
+apt-get install gparted
+apt-get install tightvncserver
+
+
+##################
+Setup lm-sensors##
+##################
+
+##Detect Embedded Sensors
+sudo sensors-detect
+
+##Start Services
+sudo service kmod start
+
+##Get Sensor Info.
+sensors

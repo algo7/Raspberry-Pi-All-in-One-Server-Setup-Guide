@@ -1,0 +1,66 @@
+############################
+Set up SSH Port Forwarding##
+############################
+
+###Client Side
+
+##Forward localhost's "port2" to remote host's "port1"
+
+ssh -i xxx.pem -R 0.0.0.0:port1:localhost:port2 xxx@xxx.xxx.xxx
+
+#Example (add "p" option is necessary)
+
+ssh -R 0.0.0.0:8133:localhost:22 out@59.125.89.91
+
+ssh -i LINUX.pem -R 0.0.0.0:8133:localhost:80 ec2-user@ssh.kcis.tk
+
+autossh -N -f -p29 -R 0.0.0:8132:localhost:22 kali@59.125.89.91
+
+###Server Side
+
+##Edit sshd_config file under /etc/ssh
+
+nano /etc/ssh/sshd_config
+
+##add "GatewayPorts yes" at the bottom so the remote host will listen on the 0.0.0.0 interface instead of the 127.0.0.1 interface
+
+GatewayPorts yes
+
+#Example
+
+Port 22
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+UsePrivilegeSeparation yes
+KeyRegenerationInterval 3600
+ServerKeyBits 1024
+SyslogFacility AUTH
+LogLevel INFO
+LoginGraceTime 120
+StrictModes yes
+RSAAuthentication yes
+PubkeyAuthentication yes
+IgnoreRhosts yes
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes
+PermitRootLogin prohibit-password
+PasswordAuthentication no
+ClientAliveInterval 180
+UseDNS no
+
+GatewayPorts yes
+
+###########################

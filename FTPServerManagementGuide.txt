@@ -1,0 +1,20 @@
+#######
+Setup##
+#######
+#Installation:
+
+sudo apt-get install vsftpd
+
+#Edit the Configuration File /etc/vsftpd.conf
+
+nano /etc/vsftpd.con
+
+#Add Userlist:
+
+userlist_file=/etc/vsftpd.userlist
+userlist_enable=YES
+userlist_deny=NO
+
+#Add Users to Userlist:
+
+nano /etc/vsftpd.userlist
