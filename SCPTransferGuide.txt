@@ -1,1 +1,2 @@
-scp -P23 ximple.tkCert ximple.tkPrivk user@ssh.gpucluster.tk:/home/user
+#Upload
+scp -P22 filetobeuploaded1 filetobeuploaded2 username@ssh.example.com:/home/theuser
