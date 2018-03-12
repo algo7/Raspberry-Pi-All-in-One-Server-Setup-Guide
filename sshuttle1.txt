@@ -1,1 +1,0 @@
-sshuttle -r ec2-user@ssh.kcis.tk 0.0.0.0/0  --dns --ssh-cmd 'ssh -i LINUX.pem' -vv

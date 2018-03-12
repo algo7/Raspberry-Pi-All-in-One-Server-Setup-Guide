@@ -1,0 +1,4 @@
+#With Key File
+sshuttle -r username@ssh.example.com 0.0.0.0/0  --dns --ssh-cmd 'ssh -i auth.pem' -vv
+#Without Key File
+sshuttle -r username@ssh.example.com 0.0.0.0/0  --dns --ssh-cmd 'ssh' -vv
