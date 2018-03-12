@@ -96,7 +96,7 @@ SSLCertificateKeyFile /path/to/your_private.key
 <VirtualHost *:443>
 
         ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/hashcatserver
+        DocumentRoot /var/www/folder
 
         SSLEngine on
         SSLCertificateFile      /etc/apache2/ssl/Cert
@@ -127,7 +127,7 @@ SSLCACertificateFile /etc/apache2/origin-pull/origin-pull-ca.pem
 <VirtualHost *:443>
 	
 	ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/hashcatserver
+        DocumentRoot /var/www/folder
 
 	SSLEngine on
         SSLCertificateFile      /etc/apache2/ssl/Cert
@@ -162,18 +162,18 @@ ServerAlias yy.xxx.xxx zz.xxx.xxx kk.xxx.xxx
 
 <VirtualHost *:443>
 
-        ServerName set-algorithm.tk
-        ServerAlias www.set-algorithm.tk hh.set-algorithm.tk
+        ServerName example.com
+        ServerAlias www.example.com hh.example.com
         ServerAdmin webmas@localhost
-        DocumentRoot /var/www/ess
+        DocumentRoot /var/www/folder
 
         SSLEngine on
-        SSLCertificateFile      /etc/apache2/ssl/Cert1
-        SSLCertificateKeyFile   /etc/apache2/ssl/Privk1
+        SSLCertificateFile      /etc/apache2/ssl/Cert
+        SSLCertificateKeyFile   /etc/apache2/ssl/Privk
 
         SSLVerifyClient require
         SSLVerifyDepth 1
-        SSLCACertificateFile /etc/apache2/origin-pull/origin-pu$
+        SSLCACertificateFile /etc/apache2/origin-pull/origin-pull
 
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
