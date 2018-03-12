@@ -6,15 +6,15 @@ Set up SSH Port Forwarding##
 
 ##Forward localhost's "port2" to remote host's "port1"
 
-ssh -i xxx.pem -R 0.0.0.0:port1:localhost:port2 xxx@xxx.xxx.xxx
+ssh -i auth.pem -R 0.0.0.0:port1:localhost:port2 xxx@xxx.xxx.xxx
 
 #Example (add "p" option is necessary)
 
-ssh -R 0.0.0.0:8133:localhost:22 out@59.125.89.91
+ssh -R 0.0.0.0:8133:localhost:22 out@xxx.xxx.xxx
 
-ssh -i LINUX.pem -R 0.0.0.0:8133:localhost:80 ec2-user@ssh.kcis.tk
+ssh -i auth.pem -R 0.0.0.0:8133:localhost:80 username@ssh.example.com
 
-autossh -N -f -p29 -R 0.0.0:8132:localhost:22 kali@59.125.89.91
+autossh -N -f -p29 -R 0.0.0:8132:localhost:22 username@xxx.xxx.xxx
 
 ###Server Side
 
@@ -36,7 +36,7 @@ HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 UsePrivilegeSeparation yes
 KeyRegenerationInterval 3600
-ServerKeyBits 1024
+ServerKeyBits 2048
 SyslogFacility AUTH
 LogLevel INFO
 LoginGraceTime 120
