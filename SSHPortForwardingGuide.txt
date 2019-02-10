@@ -14,7 +14,7 @@ ssh -R 0.0.0.0:8133:localhost:22 out@xxx.xxx.xxx
 
 ssh -i auth.pem -R 0.0.0.0:8133:localhost:80 username@ssh.example.com
 
-autossh -N -f -p29 -R 0.0.0:8132:localhost:22 username@xxx.xxx.xxx
+autossh -M0 -N -f -p29 -R 0.0.0:8132:localhost:22 username@xxx.xxx.xxx
 
 ###Server Side
 
