@@ -1,0 +1,14 @@
+##Create a new user
+
+sudo useradd -m [user]
+
+##Edit /etc/ssh/sshd_config
+
+Match User [user]
+   #AllowTcpForwarding yes
+   #X11Forwarding no
+   #PermitTunnel no
+   GatewayPorts yes ##Enable listening on 0.0.0.0
+   AllowAgentForwarding no
+   PermitOpen localhost:62222 ##specify port
+   ForceCommand echo 'This account can only be used for Tunneling'
