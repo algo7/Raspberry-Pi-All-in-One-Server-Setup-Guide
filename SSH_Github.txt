@@ -16,7 +16,19 @@
 - git config --global user.email "your_mail"
 3. Set Username
 - git config --global user.name "your_name"
-4. Set GPG key
-- git config --global user.signkey "your_key"
-5. Enable GPP Signing
+4. List GPG Key (assume that you've generated it already)
+- gpg --list-secret-keys --keyid-form
+- Exmaple Output:
+
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot 
+ssb   4096R/42B317FD4BA89E7A 2016-03-10
+
+5. Copy the Key ID
+- 3AA5C34371567BD2
+6.. Set GPG key
+- git config --global user.signkey 3AA5C34371567BD2
+7. Enable GPP Signing
 - git config --global commit.gpgsign=true
