@@ -1,3 +1,4 @@
+#SSH Key for Github
 1. Generate your ssh key pair using ssh-keygen
 - ssh-keygen -t rsa -b "bits" -C "your_email@example.com"
 - ssh-keygen -t ecdsa -b "bits" -C "your_email@example.com"
@@ -7,3 +8,15 @@
 - ssh-add /path/to/your/private/key
 4. Add public key to github
 5. Clone your repo using ssh
+
+#Git Config Configuration
+1. List the current config
+- git config -l 
+2. Set email (global)
+- git config --global user.email "your_mail"
+3. Set Username
+- git config --global user.name "your_name"
+4. Set GPG key
+- git config --global user.signkey "your_key"
+5. Enable GPP Signing
+- git config --global commit.gpgsign=true
