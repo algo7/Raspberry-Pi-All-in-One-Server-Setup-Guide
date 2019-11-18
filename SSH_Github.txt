@@ -17,7 +17,7 @@
 3. Set Username
 - git config --global user.name "your_name"
 4. List GPG Key (assume that you've generated it already)
-- gpg --list-secret-keys --keyid-form
+- gpg --list-secret-keys --keyid-format LONG
 - Exmaple Output:
 
 /Users/hubot/.gnupg/secring.gpg
