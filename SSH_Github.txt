@@ -1,0 +1,9 @@
+1. Generate your ssh key pair using ssh-keygen
+- ssh-keygen -t rsa -b "bits" -C "your_email@example.com"
+- ssh-keygen -t ecdsa -b "bits" -C "your_email@example.com"
+2. Start ssh agent in the background
+- eval "$(ssh-agent -s)"
+3. Add your private key
+- ssh-add /path/to/your/private/key
+4. Add public key to github
+5. Clone your repo using ssh
