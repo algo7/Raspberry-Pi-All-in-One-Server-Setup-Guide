@@ -42,8 +42,14 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 - lsattr resolv.conf (you can use lsattr to check the attribute)
 - systemctl restart unbound (restart unbound)
 
-9. Start Tor
+9. Install nyx for monitoring
+- apt install nyx
+
+10. Start Tor
 - sudo Tor
+
+11. Monitoring
+- nyx
 
 
 ##Links
@@ -51,3 +57,4 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 2. https://2019.www.torproject.org/docs/debian.html.en (APT over Tor)
 3. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide/DebianUbuntu (Misc.)
 4. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide#Parttwo:technicalsetup (Tor relay guide)
+5. https://b4d.sablun.org/blog/2018-09-27-when-unbound-wont-write-logs/ (unbound permission)
