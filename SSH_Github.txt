@@ -33,3 +33,6 @@ ssb   4096R/42B317FD4BA89E7A 2016-03-10
 - git config --global user.signingkey 3AA5C34371567BD2
 7. Enable GPP Signing
 - git config --global commit.gpgsign=true
+
+8. OpenSSH to PEM
+ssh-keygen -p -m PEM -f [file to be convert]
