@@ -28,6 +28,9 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 - go to /etc/unbound/unbound.conf.d and setup your preffered config
 - create a log folder under /etc/unbound and a file with the name unbound.log under it
 - change ownership by chown -R unbound:unbound /etc/unbound/log
+- nano /etc/apparmor.d/local/usr.sbin.unbound (fix permission)
+- /etc/unbound/log/unbound.log rw, (put the path of the log file)
+- apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound (reload)
 
 8. Change default DNS setting
 - cp /etc/resolv.conf /etc/resolv.conf.backup (backup original resolv.conf)
