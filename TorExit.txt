@@ -1,0 +1,50 @@
+1.Enable Tor Package Repo.
+- apt install apt-transport-https (APT over HTTPS)
+# For the stable version.
+deb https://deb.torproject.org/torproject.org <DISTRIBUTION> main
+- apt install apt-transport-tor (APT over Tor)
+# For the stable version.
+deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
+
+2. Add Tor GPG Key
+- curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
+- gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+
+3. Install Debian Keyring to keep the signing key current
+- apt install deb.torproject.org-keyring
+
+4. Install Tor
+- apt install tor 
+*for apt update over tor, you have to start tor on the machine with client mode in order for the update tor work.
+
+5. Set up torrc (not in this guide)
+- go to /etc/tor and edit torrc
+- you can use tor-relay.co to help you set up torrc
+
+6.Install unbound DNS Server
+-apt install unbound
+
+7. Configure unbound (not in this guide)
+- go to /etc/unbound/unbound.conf.d and setup your preffered config
+- create a log folder under /etc/unbound and a file with the name unbound.log under it
+- change ownership by chown -R unbound:unbound /etc/unbound/log
+
+8. Change default DNS setting
+- cp /etc/resolv.conf /etc/resolv.conf.backup (backup original resolv.conf)
+- rm /run/systemd/resolve/stub-resolv.conf (remove the default symlink)
+- rm /etc/resolv.conf (remove the default file)
+- echo nameserver 127.0.0.1 > /etc/resolv.conf (create a new one with local DNS server addr.)
+- chattr +i /etc/resolv.conf (lock it from being changed)
+* chattr -i /etc/resolv.conf (can be used to unlock it)
+- lsattr resolv.conf (you can use lsattr to check the attribute)
+- systemctl restart unbound (restart unbound)
+
+9. Start Tor
+- sudo Tor
+
+
+##Links
+1. https://support.torproject.org/apt/tor-deb-repo/ (APT over HTTPS)
+2. https://2019.www.torproject.org/docs/debian.html.en (APT over Tor)
+3. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide/DebianUbuntu (Misc.)
+4. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide#Parttwo:technicalsetup (Tor relay guide)
