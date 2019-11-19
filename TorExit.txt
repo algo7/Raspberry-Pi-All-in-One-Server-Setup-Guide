@@ -45,11 +45,17 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 9. Install nyx for monitoring
 - apt install nyx
 
-10. Start Tor
+11. Drop privilege of Tor daemon afer start
+- User debian-tor => add it to the end of your torrc
+- chown -R tor-debian:tor-debian /etc/tor 
+
+12. Start Tor
 - sudo Tor
 
-11. Monitoring
+13. Monitoring
 - nyx
+
+
 
 
 ##Links
@@ -58,3 +64,4 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 3. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide/DebianUbuntu (Misc.)
 4. https://trac.torproject.org/projects/tor/wiki/TorRelayGuide#Parttwo:technicalsetup (Tor relay guide)
 5. https://b4d.sablun.org/blog/2018-09-27-when-unbound-wont-write-logs/ (unbound permission)
+6. https://www.google.com/url?sa=t&source=web&rct=j&url=https://tor.stackexchange.com/questions/13047/failed-to-bind-listening-port&ved=2ahUKEwi1m83Y6_XlAhVmwsQBHXm5CC8QFjAFegQIBRAC&usg=AOvVaw2-yTsA6bKL2OW6TwEohsZL (privilege dropping -> read the comment)
