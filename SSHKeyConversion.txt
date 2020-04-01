@@ -1,0 +1,1 @@
+ssh-keygen -p -m PEM -f infile
