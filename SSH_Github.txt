@@ -8,7 +8,7 @@
 - ssh-add /path/to/your/private/key
 4. Add public key to github
 5. Clone your repo using ssh
-*OPTIONA: run 'ssh -T git@github.com' in your terminal to test the key
+*OPTIONAL: run 'ssh -T git@github.com' in your terminal to test the key
 
 #Git Config Configuration
 1. List the current config
