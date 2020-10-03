@@ -144,7 +144,6 @@ Type=simple
 User=root
 ExecStart=/etc/unbound/log/sniffService.sh
 ExecStop=/etc/unbound/log/sniffService.sh
-Restart=/etc/unbound/log/sniffService.sh
 
 [Install]
 WantedBy=multi-user.target
