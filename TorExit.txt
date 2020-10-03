@@ -55,7 +55,68 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 13. Monitoring
 - nyx
 
+14. Create Startup Script for Tor
+- go to /etc/systemd/system
+- run touch torr.service
+- content of the file:
+[Unit]
+Description=Tor relay serivce
+After=multi-user.target
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
 
+[Service]
+Type=forking
+ExecStart=/usr/bin/tor
+ExecStop=/usr/bin/tor
+Restart=/usr/bin/tor
+
+[Install]
+WantedBy=multi-user.target
+- systemctl enable torr
+
+14.1 Startup Script when Running 2 Tor Instances on the Same Machine (high capacity relays)
+- repeat the steps as step 14
+- but create two service files: torr.service torr1.service (the only difference is the torrc file location)
+
+- content of torr.service:
+[Unit]
+Description=Tor relay serivce
+After=multi-user.target
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+Type=forking
+Environment="opt=-f /etc/tor/torrc"
+ExecStart=/usr/bin/tor $opt
+ExecStop=/usr/bin/tor
+Restart=/usr/bin/tor $opt
+
+[Install]
+WantedBy=multi-user.target
+
+- content of torr1.service:
+[Unit]
+Description=Tor relay serivce 1
+After=multi-user.target
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+Type=forking
+Environment="opt=-f /etc/tor/torrc1"
+ExecStart=/usr/bin/tor $opt
+ExecStop=/usr/bin/tor
+Restart=/usr/bin/tor $opt
+
+[Install]
+WantedBy=multi-user.target
+- run systemctl enable torr && systemctl enable torr1
+- check their status by running systemctl status torr (or torr1)
 
 
 ##Links
