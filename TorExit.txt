@@ -47,7 +47,7 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 
 11. Drop privilege of Tor daemon afer start
 - User debian-tor => add it to the end of your torrc
-- chown -R tor-debian:tor-debian /etc/tor 
+- chown -R debian-tor:debian-tor /etc/tor 
 
 12. Start Tor
 - sudo Tor
