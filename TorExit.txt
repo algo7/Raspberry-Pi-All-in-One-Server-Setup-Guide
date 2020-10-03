@@ -50,10 +50,19 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 - chown -R debian-tor:debian-tor /etc/tor 
 
 12. Start Tor
-- sudo Tor
+- sudo Tor or see below for the startup script option
 
 13. Monitoring
 - nyx
+- nyx config
+max_graph_width 700
+show_interpreter false
+show_torrc false
+show_config false
+graph_height 12
+write_logs_to /home/ubuntu/.nyx/nyx.log
+connection_order COUNTRY, IP_ADDRESS, UPTIME
+
 
 14. Create Startup Script for Tor
 - go to /etc/systemd/system
