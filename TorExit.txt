@@ -176,6 +176,9 @@ tail -f -n 100 unbound.log | tr '[:upper:]' '[:lower:]'
 
 ## Misc:
 su -l userName (switch user and run non-root command)
+passwd -l root (lock the root account by setting the password to expire)
+driftnet -i [interface] -a -d [directory] (run drifnet)
+
 ##Links
 1. https://support.torproject.org/apt/tor-deb-repo/ (APT over HTTPS)
 2. https://2019.www.torproject.org/docs/debian.html.en (APT over Tor)
