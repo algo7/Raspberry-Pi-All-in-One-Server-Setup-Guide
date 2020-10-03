@@ -152,6 +152,28 @@ WantedBy=multi-user.target
 #!/bin/bash
 dsniff >> /etc/unbound/log/sniff.log
 
+- convert the DNS query log to lower case (lower.sh)
+#!/bin/bash
+cat unbound.log |  tr '[:upper:]' '[:lower:]' > lower.log
+
+- extract urls from the the DNS query (urlExtract.sh)
+#!/bin/bash
+cat lower.log | cut -d " " -f 5 > pureUrl.log
+cat lower.log | cut -d " " -f 5 | sort | uniq > uniqUrl.log
+cat url.log | cut -d '"' -f 2 | sort | uniq > url.log
+
+- extract imap domain from the sniff log (imapDomain.sh)
+#!/bin/bash
+cat sniff.log | grep imap | cut -d " " -f 6 | sort | uniq
+
+- extract pop domain from the sniff log (popDomain.sh)
+#!/bin/bash
+cat sniff.log | grep pop3 | cut -d " " -f 6 | sort | uniq
+
+- monitor the DNS query (lowerMonit.sh)
+#!/bin/bash
+tail -f -n 100 unbound.log | tr '[:upper:]' '[:lower:]'
+
 ## Misc:
 su -l userName (switch user and run non-root command)
 ##Links
