@@ -54,7 +54,7 @@ deb tor://sdscoq7snqtznauu.onion/torproject.org <DISTRIBUTION> main
 
 13. Monitoring
 - nyx
-- nyx config
+- nyx config:
 max_graph_width 700
 show_interpreter false
 show_torrc false
@@ -62,6 +62,8 @@ show_config false
 graph_height 12
 write_logs_to /home/ubuntu/.nyx/nyx.log
 connection_order COUNTRY, IP_ADDRESS, UPTIME
+- add the current user to the debian-tor group so nyx can be run as a normal user, not as root
+usermod -a -G debian-tor ubuntu
 
 
 14. Create Startup Script for Tor
