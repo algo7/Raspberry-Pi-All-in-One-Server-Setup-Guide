@@ -139,7 +139,8 @@ Restart=/etc/unbound/log/sniffService.sh
 WantedBy=multi-user.target
 
 
-
+## Misc:
+su -l userName (switch user and run non-root command)
 ##Links
 1. https://support.torproject.org/apt/tor-deb-repo/ (APT over HTTPS)
 2. https://2019.www.torproject.org/docs/debian.html.en (APT over Tor)
