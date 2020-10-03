@@ -1,0 +1,11 @@
+### Disable Password Prompt for Users When Using Pub/Private Key Auth:
+visudo -f /etc/sudoers.d/90-cloud-init-users
+# User rules for ubuntu
+ubuntu ALL=(ALL) NOPASSWD:ALL
+
+### sshd_config Setting:
+PermitEmptyPasswords no
+PermitRootLogin no
+AllowUsers testUser
+Protocol 2
+PasswordAuthentication no
