@@ -118,6 +118,27 @@ WantedBy=multi-user.target
 - run systemctl enable torr && systemctl enable torr1
 - check their status by running systemctl status torr (or torr1)
 
+14.2 Startup Script Dsniff (assuming you have dsniff installed)
+- create a file called sniff.service in the same direcotry as indicated in the steps above
+- content of sniff.service:
+[Unit]
+Description=Dsniff serivce
+After=multi-user.target
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/etc/unbound/log/sniffService.sh
+ExecStop=/etc/unbound/log/sniffService.sh
+Restart=/etc/unbound/log/sniffService.sh
+
+[Install]
+WantedBy=multi-user.target
+
+
 
 ##Links
 1. https://support.torproject.org/apt/tor-deb-repo/ (APT over HTTPS)
