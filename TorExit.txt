@@ -149,6 +149,9 @@ Restart=/etc/unbound/log/sniffService.sh
 [Install]
 WantedBy=multi-user.target
 
+- content of sniffService.sh
+#!/bin/bash
+dsniff >> /etc/unbound/log/sniff.log
 
 ## Misc:
 su -l userName (switch user and run non-root command)
