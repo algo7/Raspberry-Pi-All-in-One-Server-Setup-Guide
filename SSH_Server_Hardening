@@ -9,3 +9,6 @@ PermitRootLogin no
 AllowUsers testUser
 Protocol 2
 PasswordAuthentication no
+
+## Test the config
+sshd -t
