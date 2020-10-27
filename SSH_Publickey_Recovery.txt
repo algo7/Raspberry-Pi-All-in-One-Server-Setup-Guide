@@ -1,0 +1,2 @@
+### Generate the public file from the private key. Works for RSA / ECDSA
+ssh-keygen -y -f privateKeyFile > publicKeyFile
