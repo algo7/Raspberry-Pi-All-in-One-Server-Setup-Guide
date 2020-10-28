@@ -14,7 +14,7 @@ Add the Config File to the Boot Partition##
 ###########################################
 
 ###For HDMI Reslolution (800x480)
-##Config File Content (Copy the Below Content Only):)
+##Config File (usercfg) Content (Copy the Below Content Only):
 
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
