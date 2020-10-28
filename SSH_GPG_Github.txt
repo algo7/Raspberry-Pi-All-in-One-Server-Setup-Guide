@@ -1,4 +1,4 @@
-#SSH Key for Github (assuming you have the user setup already in the git config file)
+# SSH Key for Github (assuming you have the user setup already in the git config file)
 1. Generate your ssh key pair using ssh-keygen
 - ssh-keygen -t rsa -b "bits" -C "your_email@example.com"
 - ssh-keygen -t ecdsa -b "bits" -C "your_email@example.com"
@@ -10,7 +10,7 @@
 5. Clone your repo using ssh
 *OPTIONAL: run 'ssh -T git@github.com' in your terminal to test the key
 
-#Git Config Configuration
+# Git Config Configuration
 1. List the current config
 - git config -l 
 2. Set email (global)
