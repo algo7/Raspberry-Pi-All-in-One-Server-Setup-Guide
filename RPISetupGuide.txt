@@ -61,6 +61,8 @@ max_usb_current=1
 arm_freq=800
 
 # for more options see http://elinux.org/RPi_config.txt)
+# https://www.raspberrypi.org/forums/viewtopic.php?t=235753
+# https://www.tomshardware.com/how-to/overclock-any-raspberry-pi
 
 ##End of Config File (Copy the Above Content Only)
 
