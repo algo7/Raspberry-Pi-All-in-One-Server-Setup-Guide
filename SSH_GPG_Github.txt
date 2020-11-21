@@ -14,7 +14,7 @@
 1. List the current config
 - git config -l 
 2. Set email (global)
-- git config --global user.email "your_mail"
+- git config --global user.email "your_mail" (without quotation marks)
 * Remember to put the xxx@users.noreply.github.com address if you set your email addr. as private
 3. Set Username
 - git config --global user.name "your_name" (without quotation marks)
