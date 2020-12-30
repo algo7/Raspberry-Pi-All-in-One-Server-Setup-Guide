@@ -46,3 +46,7 @@ so-rcvbuf: 1m
 private-address: 192.168.0.0/16
 private-address: 172.16.0.0/12
 private-address: 10.0.0.0/8
+
+#local-zone: "google.com" redirect
+#server:
+#local-data: "google.com A 192.168.1.1"
