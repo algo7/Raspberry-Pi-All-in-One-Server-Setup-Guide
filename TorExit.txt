@@ -79,13 +79,16 @@ After=network-online.target
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/tor
+Environment="opt=-f /etc/tor/torrc"
+ExecStart=/usr/bin/tor $opt
 ExecStop=/usr/bin/tor
-Restart=/usr/bin/tor
+Restart=/bin/kill -2 $MAINPID
 
 [Install]
 WantedBy=multi-user.target
-- systemctl enable torr
+
+- enable the service 
+systemctl enable torr
 
 14.1 Startup Script when Running 2 Tor Instances on the Same Machine (high capacity relays)
 - repeat the steps as step 14
@@ -151,6 +154,9 @@ WantedBy=multi-user.target
 - content of sniffService.sh
 #!/bin/bash
 dsniff >> /etc/unbound/log/sniff.log
+
+- make it executable
+chmod +x sniffService.sh
 
 - convert the DNS query log to lower case (lower.sh)
 #!/bin/bash
