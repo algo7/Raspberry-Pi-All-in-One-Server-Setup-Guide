@@ -3,7 +3,7 @@
 
 BandwidthBurst 2147483647
 BandwidthRate 2147483647
-ContactInfo Y2hhb2hlbmcubG8=(at)ZWhsLmNo [base64 encoded]
+ContactInfo contact_info
 ControlPort 9052
 DataDirectory /etc/tor1
 CookieAuthentication 1
@@ -90,14 +90,11 @@ ExitPolicy accept *:64738
 ExitRelay 1
 IPv6Exit 1
 Log notice file /etc/tor1/log/notices.log
-Nickname thealgorithm1
-MyFamily 2B51193205D091CC80B904D65721FF8DCBE51C96
-Address 77.109.191.140
+Nickname relay_nickname
+MyFamily fam_mem_fingerprint
+Address ip_addr
 ORPort 9001
-#ORPort [2a02:120b:2c30:65f0:dea6:32ff:fe25:6f6]:9001 NoAdvertise
-#ORPort [2a02:120b:c3f6:6190:dea6:32ff:fe25:6f6]:443
-#ORPort 0.0.0.0:9001 NoAdvertise
-ORPort [2001:1620:68c:2001:dea6:32ff:fe25:6f6]:9001
+ORPort [ipv6_addr]:9001
 RelayBandwidthBurst 2147483647
 RelayBandwidthRate 2147483647
 RunAsDaemon 1
