@@ -1,0 +1,17 @@
+# Format (without [ ])
+Host [Host_name]
+ User [User_name]
+ HostName [IP_addr]
+
+ # Will be ignored if the key is added to ssh agent as the ssh agent will check all keys against all servers
+ # So it is advised have this field
+ # See https://superuser.com/questions/1053412/tell-ssh-to-try-all-key-files-in-ssh
+ IdentityFile [Key_path] 
+ 
+ ## SSH will request terminal output if its source of input is also a terminal.
+ # RequestTTY yes
+ ## Remote command to run
+ # RemoteCommand echo "x" > ~/test && bash
+ 
+ # Remove key from ssh agent
+ https://stackoverflow.com/questions/25464930/how-can-i-remove-an-ssh-key
