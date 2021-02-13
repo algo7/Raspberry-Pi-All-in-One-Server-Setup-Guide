@@ -1,0 +1,13 @@
+# Check the current setting
+systemctl cat getty@tty[number_here] | grep Exec
+# Edit the setting
+sudo systemctl edit getty@tty[number_here]
+# Content
+[Service]
+ExecStart= 
+ExecStart=-/sbin/agetty -a [USERNAME] --noclear %I $TERM
+## Empty ExecStart= is required
+# Restart the service
+sudo systemctl restart getty@tty[number_here]
+# Restart the system
+sudo reboot
