@@ -2,10 +2,10 @@
 DD The Kali Image File##
 ########################
 
-##Check SD Card Partition
+## Check SD Card Partition
 fdisk -l 
 
-##Flash / DD the image into the SD Card
+## Flash / DD the image into the SD Card
 
 dd if=/path/to/file/kali.img of=/dev/urpartition bs=512k
 
