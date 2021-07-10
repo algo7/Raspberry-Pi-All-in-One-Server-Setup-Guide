@@ -13,8 +13,8 @@ dd if=/path/to/file/kali.img of=/dev/urpartition bs=512k
 Add the Config File to the Boot Partition##
 ###########################################
 
-###For HDMI Reslolution (800x480)
-##Config File (usercfg) Content (Copy the Below Content Only):
+### For HDMI Reslolution (800x480)
+## Config File (usercfg) Content (Copy the Below Content Only):
 
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
