@@ -8,7 +8,7 @@ Set up SSH Port Forwarding##
 
 ssh -i auth.pem -R 0.0.0.0:port1:localhost:port2 xxx@xxx.xxx.xxx
 
-#Example (add "p" option is necessary)
+#Example (add "p" option if necessary)
 
 ssh -R 0.0.0.0:8133:localhost:22 out@xxx.xxx.xxx
 
