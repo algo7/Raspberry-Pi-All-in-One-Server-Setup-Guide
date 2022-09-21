@@ -19,9 +19,10 @@ Select Option:
 10. Connect to FR6 [Not Working]
 11. Connect to Qual
 12. Connect to Demo
-13. Close Specific VPN Session
-14. Close all Connections
-15. Log Specific VPN Connection
+13. Connect to Demo3
+14. Close Specific VPN Session
+15. Close all Connections
+16. Log Specific VPN Connection
 
 EOF
 
@@ -36,15 +37,16 @@ readarray -t active_connection_names < <(openvpn3 sessions-list | grep "Config n
 readarray -t active_connection_paths < <(openvpn3 sessions-list | grep "Path" | awk '{print $2}')
 
 readarray -t available_connection_names < <(openvpn3 configs-list | grep "$(whoami)" | awk '{print $1}')
+declare -p active_connection_names
 
 # Function to check for duplicate VPN connections
 function check_dup() {
 
 # Print the array
-# declare -p active_connections_names
+# declare -p active_connection_names
 
 # If the array contains the given connection name, then exit
-if [[ "${active_connection_names[*]}" =~ $1 ]]; then
+if [[ "${active_connection_names[@]}" =~ $1 ]]; then
   echo -e "Duplicate Connection Attempted.\n"
   exit 1
 fi
@@ -54,14 +56,15 @@ fi
 function close_specific_connection() {
 
 # If there is no active connection, then exit
-if [[ ${#active_connections[@]} == 0 ]]; then
+if [[ ${#active_connection_names[@]} == 0 ]]; then
+
   echo -e "No Active Connections Found.\n"
   exit 0
 fi
 
 # Print the array
 echo "Active Connections:"
-for i in "${active_connections[@]}"
+for i in "${active_connection_names[@]}"
 do 
    echo "$i"
 done
@@ -76,7 +79,7 @@ if [[ -z "$CONNECTION_NAME" ]]; then
 fi
 
 # If the array doesn't contain the given connection name, then exit
-if [[ ! "${active_connections[*]}" =~ "$CONNECTION_NAME" ]]; then
+if [[ ! "${active_connection_names[@]}" =~ "$CONNECTION_NAME" ]]; then
   echo -e "No Such Connection.\n"
   exit 1
 fi
@@ -89,7 +92,7 @@ openvpn3 session-manage --disconnect --path $CONNECTION_TO_CLOSE
 # Function to close all active VPN connections
 function close_all_connection() {
 
-for i in "${active_connection_path[@]}"
+for i in "${active_connection_paths[@]}"
 
 # Loop through all paths and close all active connections
 do 
@@ -105,7 +108,7 @@ function log_connection() {
 read -p "Enter the name of the connection: " CONNECTION_NAME
 
 # If the array doesn't contain the given connection name, then exit
-if [[ ! "${available_connection_names[*]}" =~ "$CONNECTION_NAME" ]]; then
+if [[ ! "${available_connection_names[@]}" =~ "$CONNECTION_NAME" ]]; then
   echo -e "No Such Connection.\n"
   exit 1
 fi
@@ -180,13 +183,18 @@ case $OPTION in
     openvpn3 session-start --config Demo
     ;;
   13)
+    echo -e "Connect to Demo3... \n"
+    check_dup Demo3
+    openvpn3 session-start --config Demo3
+    ;;  
+  14)
     close_specific_connection
     ;;
-  14)
+  15)
     echo -e "Close all Connections... \n"
     close_all_connection
     ;;
-  15)
+  16)
     log_connection
     ;;
   *)
