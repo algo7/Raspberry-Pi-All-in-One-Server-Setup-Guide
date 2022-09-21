@@ -23,6 +23,7 @@ Select Option:
 14. Close Specific VPN Session
 15. Close all Connections
 16. Log Specific VPN Connection
+17. Exit
 
 EOF
 
@@ -37,13 +38,12 @@ readarray -t active_connection_names < <(openvpn3 sessions-list | grep "Config n
 readarray -t active_connection_paths < <(openvpn3 sessions-list | grep "Path" | awk '{print $2}')
 
 readarray -t available_connection_names < <(openvpn3 configs-list | grep "$(whoami)" | awk '{print $1}')
-declare -p active_connection_names
-
-# Function to check for duplicate VPN connections
-function check_dup() {
 
 # Print the array
 # declare -p active_connection_names
+
+# Function to check for duplicate VPN connections
+function check_dup() {
 
 # If the array contains the given connection name, then exit
 if [[ "${active_connection_names[@]}" =~ $1 ]]; then
@@ -196,6 +196,10 @@ case $OPTION in
     ;;
   16)
     log_connection
+    ;;
+  17)
+    echo -e "Exiting... \n"
+    exit 0
     ;;
   *)
     echo -e "Invalid Option!\n"
