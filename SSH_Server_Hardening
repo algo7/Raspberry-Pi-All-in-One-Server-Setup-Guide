@@ -6,9 +6,11 @@ ubuntu ALL=(ALL) NOPASSWD:ALL
 ### sshd_config Setting:
 PermitEmptyPasswords no
 PermitRootLogin no
-AllowUsers testUser
+AllowUsers <your_user>
 Protocol 2
 PasswordAuthentication no
+ChallengeResponseAuthentication no
+AuthenticationMethods publickey
 
 ## Test the config
 sshd -t
